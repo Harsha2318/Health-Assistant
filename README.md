@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # HealthCare Agent with Streamlit and Gemini
 
 A healthcare assistant application that provides health-related advice using Google's Gemini AI model. Users can ask health-related questions and upload medical reports (PDFs) for personalized advice
@@ -89,10 +88,3 @@ healthcare-agent/
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Disclaimer
-
-This application provides health-related information and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
-=======
-# Health-Assistant
->>>>>>> 58985affa5161f51c1f0480a94df14d842eba1f4
