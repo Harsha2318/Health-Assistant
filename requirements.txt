@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+httpx
+dropbox
+PyPDF2
+google-generativeai
+streamlit
+python-multipart
+python-dotenv
