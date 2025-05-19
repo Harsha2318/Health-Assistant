@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # HealthCare Agent with Streamlit and Gemini
 
-A healthcare assistant application that provides health-related advice using Google's Gemini AI model. Users can ask health-related questions and upload medical reports (PDFs) for personalized advice.
+A healthcare assistant application that provides health-related advice using Google's Gemini AI model. Users can ask health-related questions and upload medical reports (PDFs) for personalized advice
 
 ## Features
 
