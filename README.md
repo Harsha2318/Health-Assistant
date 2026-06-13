@@ -1,53 +1,52 @@
 # Health-Assistant Application
 
-A production-ready healthcare assistant application that provides AI-powered health-related advice using Google's Gemini 1.5 Flash model. Users can ask health-related questions and upload medical reports (PDFs) for personalized, context-aware advice.
-
-## 🌟 Features
-
-- 💬 **Chat Interface**: Modern, responsive chat UI for health-related queries
-- 📄 **PDF Analysis**: Upload medical reports for AI-powered analysis and insights
-- 🤖 **AI-Powered**: Powered by Google's Gemini 1.5 Flash model with healthcare-specific prompting
-- 🔒 **Secure Storage**: Optional Dropbox integration for secure file storage
-- 🎨 **Modern UI**: Beautiful, dark-themed Streamlit interface
-- 📊 **API Documentation**: Interactive API docs with FastAPI Swagger UI
-- ⚠️ **Safety First**: Built-in safety guidelines and medical disclaimers
+A production-ready AI-powered health assistant built with FastAPI, Streamlit, Google Gemini 1.5 Flash, and Dropbox integration. This application provides a secure chat interface for health queries and medical report analysis.
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   Streamlit     │────▶│    FastAPI       │────▶│  Google Gemini  │
-│   Frontend      │     │    Backend       │     │  1.5 Flash API  │
-│   (Port 8501)   │◀────│   (Port 8000)    │     └─────────────────┘
-└─────────────────┘     └──────────────────┘
-                               │
-                               ▼
-                        ┌──────────────────┐
-                        │    Dropbox API   │
-                        │  (Optional)      │
-                        └──────────────────┘
+│   Streamlit UI  │────▶│   FastAPI Backend│────▶│  Gemini 1.5 Flash│
+│   (Frontend)    │◀────│   (API Layer)    │◀────│  (AI Engine)    │
+└─────────────────┘     └──────────────────┘     └─────────────────┘
+        │                       │
+        ▼                       ▼
+┌─────────────────┐     ┌─────────────────┐
+│  File Upload    │     │   Dropbox API   │
+│  (PDF Reports)  │     │  (File Storage) │
+└─────────────────┘     └─────────────────┘
 ```
+
+## ✨ Features
+
+- **AI-Powered Chat**: Natural language conversations about health topics using Gemini 1.5 Flash
+- **Medical Report Analysis**: Upload PDF medical reports for AI-assisted analysis and summarization
+- **Secure File Storage**: Optional Dropbox integration for storing medical documents
+- **Modern UI**: Clean, responsive Streamlit interface with chat history management
+- **Production Ready**: Comprehensive error handling, input validation, and security best practices
+- **API Documentation**: Interactive Swagger UI for API testing and documentation
 
 ## 📁 Project Structure
 
 ```
 health-assistant/
-├── app/
-│   ├── __init__.py              # Package initializer
-│   ├── main.py                  # FastAPI application with all endpoints
-│   ├── streamlit_app.py         # Streamlit frontend
-│   ├── agents/
-│   │   ├── __init__.py
-│   │   ├── gemini_tool.py       # Gemini AI integration with healthcare prompts
-│   │   └── dropbox_tool.py      # Dropbox SDK integration
-│   └── utils/
-│       ├── __init__.py
-│       └── helpers.py           # PDF parsing, text processing utilities
-├── .env.example                 # Environment variables template
-├── requirements.txt             # Python dependencies
-├── run.py                       # Backend launcher script
-├── run_streamlit.py             # Frontend launcher script
-└── README.md                    # This file
+├── requirements.txt          # Python dependencies
+├── .env.example              # Environment variables template
+├── .env                      # Active configuration (gitignored)
+├── README.md                 # This file
+├── run.py                    # Backend launcher script
+├── run_streamlit.py          # Frontend launcher script
+└── app/
+    ├── __init__.py           # Package initializer
+    ├── main.py               # FastAPI application with all endpoints
+    ├── streamlit_app.py      # Streamlit frontend application
+    ├── agents/
+    │   ├── __init__.py       # Agents package initializer
+    │   ├── gemini_tool.py    # Google Gemini AI integration
+    │   └── dropbox_tool.py   # Dropbox API integration
+    └── utils/
+        ├── __init__.py       # Utils package initializer
+        └── helpers.py        # PDF parsing, text processing utilities
 ```
 
 ## 🚀 Quick Start
@@ -55,79 +54,82 @@ health-assistant/
 ### Prerequisites
 
 - Python 3.9 or higher
-- Google Gemini API key ([Get it here](https://aistudio.google.com/app/apikey))
-- Dropbox access token (optional, for file storage)
+- Google Gemini API Key ([Get it here](https://aistudio.google.com/app/apikey))
+- Dropbox Access Token (optional, for file storage features)
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd health-assistant
-   ```
+1. **Navigate to the project directory**:
+```bash
+cd /workspace
+```
 
-2. **Create a virtual environment (recommended)**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+2. **Create and activate a virtual environment**:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. **Install dependencies**:
+```bash
+pip install -r requirements.txt
+```
 
-4. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` and add your API keys:
-   ```
-   GEMINI_API_KEY=your_actual_gemini_api_key
-   DROPBOX_ACCESS_TOKEN=your_actual_dropbox_token  # Optional
-   BACKEND_URL=http://localhost:8000
-   ```
+4. **Configure environment variables**:
+```bash
+cp .env.example .env
+```
 
-5. **Start the FastAPI backend**
-   ```bash
-   python run.py
-   # Or alternatively:
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-   ```
+Edit `.env` and add your API keys:
+```env
+GEMINI_API_KEY=your_google_gemini_api_key_here
+DROPBOX_ACCESS_TOKEN=your_dropbox_access_token_here  # Optional
+BACKEND_URL=http://localhost:8000
+```
 
-6. **Start the Streamlit frontend** (in a new terminal)
-   ```bash
-   streamlit run app/streamlit_app.py
-   # Or alternatively:
-   python run_streamlit.py
-   ```
+### Running the Application
 
-7. **Access the application**
-   - **Frontend**: http://localhost:8501
-   - **API Docs**: http://localhost:8000/docs
-   - **Alternative API Docs**: http://localhost:8000/redoc
+#### Option 1: Using Launcher Scripts (Recommended)
+
+**Terminal 1 - Start Backend:**
+```bash
+python run.py
+```
+
+**Terminal 2 - Start Frontend:**
+```bash
+streamlit run app/streamlit_app.py
+```
+
+#### Option 2: Direct Commands
+
+**Terminal 1 - Start Backend:**
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**Terminal 2 - Start Frontend:**
+```bash
+streamlit run app/streamlit_app.py
+```
+
+#### Option 3: Production Mode
+
+**Backend (Production):**
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+```
+
+### Access the Application
+
+- **Frontend UI**: http://localhost:8501
+- **API Documentation**: http://localhost:8000/docs
+- **API Health Check**: http://localhost:8000/api/health
 
 ## 📡 API Endpoints
 
-### `GET /`
-Root endpoint with API information.
-
-### `GET /api/health`
-Health check endpoint to verify the API is running.
-
-**Response:**
-```json
-{
-  "status": "healthy",
-  "service": "health-assistant-api",
-  "version": "1.0.0",
-  "timestamp": "2024-01-15T10:30:00Z"
-}
-```
-
-### `POST /api/chat`
-Send a health query without file upload.
+### POST `/api/chat`
+Send a message to the AI assistant.
 
 **Request Body:**
 ```json
@@ -140,98 +142,117 @@ Send a health query without file upload.
 ```json
 {
   "status": "success",
-  "response": "Diabetes symptoms include frequent urination, increased thirst...",
+  "response": "Diabetes symptoms include frequent urination, excessive thirst...",
   "timestamp": "2024-01-15T10:30:00Z"
 }
 ```
 
-### `POST /api/upload`
-Upload a medical document (PDF) and get AI analysis.
+### POST `/api/upload`
+Upload a PDF medical report for analysis.
 
 **Request:**
-- `query` (form field): User's health question
-- `file` (file upload): PDF medical document
+- Content-Type: `multipart/form-data`
+- Form field: `query` (user question)
+- Form field: `file` (PDF file)
 
-**Response:** Same as `/api/chat`
+**Response:**
+```json
+{
+  "status": "success",
+  "response": "Based on your medical report...",
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
 
-### `POST /api/health-advice`
-Legacy endpoint supporting both chat and file upload.
+### GET `/api/health`
+Check API health status.
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "service": "health-assistant-api",
+  "version": "1.0.0"
+}
+```
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `GEMINI_API_KEY` | Google Gemini API key | Yes | - |
-| `DROPBOX_ACCESS_TOKEN` | Dropbox API access token | No | - |
-| `BACKEND_URL` | Backend API URL | No | `http://localhost:8000` |
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GEMINI_API_KEY` | ✅ Yes | Your Google Gemini API key |
+| `DROPBOX_ACCESS_TOKEN` | ❌ No | Dropbox access token for file storage |
+| `BACKEND_URL` | ❌ No | Backend API URL (default: http://localhost:8000) |
 
-### Getting API Keys
+### PDF Parsing
 
-#### Google Gemini API Key
-1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Sign in with your Google account
-3. Click "Create API Key"
-4. Copy the key and add it to your `.env` file
+The application supports multiple PDF parsing strategies:
+- **PyPDF2**: Fast extraction for standard PDFs
+- **pdfplumber**: Advanced extraction for complex layouts (tables, columns)
 
-#### Dropbox Access Token (Optional)
-1. Visit [Dropbox Developers](https://www.dropbox.com/developers/apps)
-2. Click "Create app"
-3. Choose "Scoped access" → "Full Dropbox"
-4. Name your app and create it
-5. In the settings, generate an access token
-6. Copy the token and add it to your `.env` file
-
-## 🧪 Testing
-
-### Test the Backend
-
-1. **Using curl:**
-   ```bash
-   # Health check
-   curl http://localhost:8000/api/health
-   
-   # Chat query
-   curl -X POST http://localhost:8000/api/chat \
-     -H "Content-Type: application/json" \
-     -d '{"query": "What are common symptoms of flu?"}'
-   ```
-
-2. **Using the Swagger UI:**
-   - Open http://localhost:8000/docs
-   - Try out the endpoints interactively
-
-### Test the Frontend
-
-1. Start both backend and frontend
-2. Open http://localhost:8501 in your browser
-3. Try these test scenarios:
-   - Ask a simple health question
-   - Upload a sample PDF medical report
-   - Check the sidebar tips and status indicators
+The system automatically falls back to alternative parsers if the primary method fails.
 
 ## 🛡️ Security & Privacy
 
+### Important Medical Disclaimer
+
+⚠️ **This application is for informational purposes only and does not constitute medical advice.**
+
+- Always consult with qualified healthcare professionals for medical concerns
+- In case of emergency, call your local emergency number immediately
+- Do not delay seeking professional medical advice based on AI responses
+
 ### Data Handling
-- All health queries are processed securely via HTTPS (in production)
-- Medical documents are optionally stored in your personal Dropbox
-- No data is retained on our servers beyond the session
 
-### Important Disclaimers
-⚠️ **This application:**
-- Does NOT diagnose medical conditions
-- Does NOT prescribe medications
-- Does NOT replace professional medical advice
-- Should NOT be used for medical emergencies
+- **No Data Persistence**: Chat conversations are not stored on the server
+- **Temporary File Processing**: Uploaded PDFs are processed in-memory and not saved
+- **Optional Cloud Storage**: Dropbox integration is opt-in only
+- **API Key Security**: Keys are loaded from environment variables, never hardcoded
 
-**For emergencies, always call 911 or your local emergency number.**
+### Best Practices Implemented
 
-## 🚀 Production Deployment
+- Input validation on all API endpoints
+- CORS configuration for cross-origin requests
+- Error handling with appropriate HTTP status codes
+- Secure handling of sensitive medical information
 
-### Docker Deployment (Recommended)
+## 🧪 Testing
 
-Create a `Dockerfile`:
+### Manual Testing
+
+1. **Test Chat Functionality**:
+   - Open http://localhost:8501
+   - Send a health-related question
+   - Verify AI response appears in chat
+
+2. **Test PDF Upload**:
+   - Upload a sample medical report PDF
+   - Verify text extraction and AI analysis
+   - Check for proper error handling with invalid files
+
+3. **Test API Endpoints**:
+   - Visit http://localhost:8000/docs
+   - Try each endpoint with test data
+   - Verify response formats
+
+### Test with curl
+
+```bash
+# Health check
+curl http://localhost:8000/api/health
+
+# Chat query
+curl -X POST http://localhost:8000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"query": "What are common symptoms of flu?"}'
+```
+
+## 🐳 Docker Deployment
+
+### Build Docker Image
+
 ```dockerfile
 FROM python:3.11-slim
 
@@ -247,47 +268,33 @@ EXPOSE 8000 8501
 CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port 8000 & streamlit run app/streamlit_app.py --server.port 8501 --server.address 0.0.0.0"]
 ```
 
-### Environment Variables for Production
+### Run with Docker
+
 ```bash
-GEMINI_API_KEY=your_production_key
-DROPBOX_ACCESS_TOKEN=your_production_token
-BACKEND_URL=https://your-domain.com/api
+docker build -t health-assistant .
+docker run -p 8000:8000 -p 8501:8501 \
+  -e GEMINI_API_KEY=your_key \
+  -e DROPBOX_ACCESS_TOKEN=your_token \
+  health-assistant
 ```
 
-### Security Best Practices
-1. Use HTTPS in production
-2. Implement authentication if handling sensitive data
-3. Add rate limiting to prevent abuse
-4. Enable CORS only for trusted domains
-5. Store secrets in a secure vault (e.g., AWS Secrets Manager, HashiCorp Vault)
+## 📊 Monitoring & Logging
 
-## 📝 Development
+### Application Logs
 
-### Running Tests
-```bash
-# Install test dependencies
-pip install pytest pytest-asyncio httpx
+Logs are output to stdout/stderr and can be captured by:
+- Docker logging drivers
+- Systemd journal (Linux)
+- Cloud logging services (AWS CloudWatch, GCP Logging, etc.)
 
-# Run tests
-pytest
-```
+### Health Checks
 
-### Code Style
-```bash
-# Install linting tools
-pip install black flake8 isort
-
-# Format code
-black .
-isort .
-
-# Lint code
-flake8 .
-```
+Use the `/api/health` endpoint for:
+- Load balancer health checks
+- Kubernetes liveness/readiness probes
+- Monitoring system alerts
 
 ## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -295,20 +302,26 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+### Code Style
+
+- Follow PEP 8 guidelines
+- Use type hints for function signatures
+- Write docstrings for public functions and classes
+
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- [Google Gemini AI](https://ai.google.dev/) for the powerful language model
-- [Streamlit](https://streamlit.io/) for the beautiful frontend framework
-- [FastAPI](https://fastapi.tiangolo.com/) for the high-performance backend
-- [Dropbox](https://www.dropbox.com/developers) for secure file storage
+- [Google Gemini](https://ai.google.dev/) - AI model provider
+- [FastAPI](https://fastapi.tiangolo.com/) - Modern web framework
+- [Streamlit](https://streamlit.io/) - Frontend framework
+- [Dropbox API](https://www.dropbox.com/developers) - Cloud storage integration
 
 ## 📞 Support
 
-For issues, questions, or suggestions:
+For issues, questions, or contributions:
 - Open an issue on GitHub
 - Check existing documentation
 - Review API error messages for troubleshooting
@@ -316,3 +329,5 @@ For issues, questions, or suggestions:
 ---
 
 **Built with ❤️ for better healthcare accessibility**
+
+*Remember: This tool supplements but never replaces professional medical advice.*
